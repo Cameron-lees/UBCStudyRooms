@@ -1,0 +1,36 @@
+const puppeteer = require('puppeteer');
+const prompt = require('prompt');
+
+var schema = {
+    properties: {
+      username: {
+        hidden: false
+      },
+      password: {
+        hidden: false
+      },
+      NumCourses: {
+        hidden: false
+      }
+    }
+  };
+
+prompt.start();
+
+(async() => {
+    var result = await new Promise(function (resolve, reject) {
+        prompt.get(schema, function (err, result) {
+            resolve(result);
+            console.log(result);
+        });
+    });
+
+    const width = 2000
+    const height = 1000
+
+    const browser = await puppeteer.launch({
+        headless: false,
+        args: [
+            `--window-size=${ width },${ height }`
+        ],
+    });
